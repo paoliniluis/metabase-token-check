@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+  nginx:
+    image: nginx:1.21.6-alpine
+    hostname: nginx
+    container_name: nginx
+    volumes: 
+      - $PWD/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - $PWD/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - metanet-private
+      - metanet-public
+    ports:
+      - 8080:80
+  metabase_ha1:
+    image: metabase/metabase-enterprise:v1.43.4
+    hostname: metabase
+    container_name: metabase
+    environment:
+      - "MB_PREMIUM_EMBEDDING_TOKEN=ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    networks:
+      - metanet-private
+networks: 
+  metanet-private:
+    driver: bridge
+    internal: true
+  metanet-public:
+    driver: bridge
