@@ -13,7 +13,7 @@ services:
     ports:
       - 8080:80
   metabase_ha1:
-    image: metabase/metabase-enterprise:v1.43.4
+    build: .
     hostname: metabase
     container_name: metabase
     environment:
